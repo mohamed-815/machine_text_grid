@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:machin_test_mumbai/main.dart';
+import 'package:machin_test_mumbai/view/wigets/customtext.dart';
+import 'package:machin_test_mumbai/view/wigets/customtextfield.dart';
+
+import '../core/const/const.dart';
 
 class GridSearch extends StatefulWidget {
   @override
@@ -105,22 +110,26 @@ class _GridSearchState extends State<GridSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Grid Search'),
+        backgroundColor: const Color.fromARGB(255, 11, 46, 91),
+        title: const Text('Grid Search'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16.0),
-                  Text('Enter the alphabets for the grid:'),
-                  SizedBox(height: 8.0),
+                  khieght,
+                  khieght,
+                  Customtext(
+                      text: 'Enter the alphabets for the grid:', size: 16),
+                  khieght,
                   m == 0 || n == 0
-                      ? SizedBox()
+                      ? const SizedBox()
                       : GridView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -132,71 +141,90 @@ class _GridSearchState extends State<GridSearch> {
                           itemBuilder: (context, index) {
                             int i = index ~/ n;
                             int j = index % n;
-                            return TextField(
-                              maxLength: 1,
-                              onChanged: (value) {
-                                setState(() {
-                                  grid[i][j] = value;
-                                });
-                              },
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomTextFileds(
+                                len: 1,
+                                onchaged: (value) {
+                                  setState(() {
+                                    grid[i][j] = value;
+                                  });
+                                },
+                              ),
                             );
                           },
                         ),
-                  SizedBox(height: 16),
-                  SizedBox(height: 16.0),
-                  Text('Enter the text to search:'),
-                  SizedBox(height: 8.0),
+                  khieght,
+                  khieght,
+                  khieght,
+                  khieght,
+                  Customtext(text: 'Enter the text to search:', size: 16),
+                  khieght,
                   TextField(
                     controller: searchController,
+                    decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                        enabledBorder: OutlineInputBorder()),
                     onChanged: (value) {
                       setState(() {
                         search = value;
                       });
                     },
                   ),
-                  SizedBox(height: 16.0),
+                  khieght,
+                  khieght,
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 7, 48, 81)),
                     onPressed: searchGrid,
-                    child: Text('Search'),
+                    child: const Text('Search'),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 16.0),
-            Text('Grid:'),
-            SizedBox(height: 8.0),
+            khieght,
+            khieght,
+            Padding(
+              padding: EdgeInsets.all(8.h),
+              child: Customtext(text: 'Grid :', size: 16),
+            ),
+            khieght,
             m == 0 || n == 0
-                ? SizedBox()
-                : GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: n,
-                    ),
-                    itemCount: m * n,
-                    itemBuilder: (context, index) {
-                      int i = index ~/ n;
-                      int j = index % n;
-                      return Container(
-                        decoration: highlight[i][j]
-                            ? BoxDecoration(
-                                color: Colors.yellow,
-                                border: Border.all(),
-                              )
-                            : BoxDecoration(
-                                border: Border.all(),
+                ? const SizedBox()
+                : Padding(
+                    padding: EdgeInsets.all(15.h),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: n,
+                      ),
+                      itemCount: m * n,
+                      itemBuilder: (context, index) {
+                        int i = index ~/ n;
+                        int j = index % n;
+                        return Container(
+                          decoration: highlight[i][j]
+                              ? BoxDecoration(
+                                  color: const Color.fromARGB(255, 13, 68, 134),
+                                  border: Border.all(),
+                                )
+                              : BoxDecoration(
+                                  border: Border.all(),
+                                ),
+                          child: Center(
+                            child: Text(
+                              grid[i][j],
+                              style: const TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
                               ),
-                        child: Center(
-                          child: Text(
-                            grid[i][j],
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
           ],
         ),
